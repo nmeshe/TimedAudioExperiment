@@ -6,20 +6,23 @@ import java.util.Date;
  *
  * @author nick
  */
+
+enum Mode {NOISE, SILENCE}
+
 public class AePlayTimer extends Thread {
     
-    public AePlayTimer(int p, AePlayWave w, AudioExpOneUI aeo) {
+    public AePlayTimer(int p, AePlayWave w, AudioExperimentUI aeo) {
         playtimeLength = p;
         wavPlayer = w;
         audioExperiment = aeo;
-        playNoise = true;
+        playMode = Mode.NOISE;
     }
 
-    public AePlayTimer(int p, AePlayWave w, AudioExpOneUI aeo, boolean pN) {
+    public AePlayTimer(int p, AePlayWave w, AudioExperimentUI aeo, boolean pM) {
         playtimeLength = p;
         wavPlayer = w;
         audioExperiment = aeo;
-        playNoise = pN;
+        playMode = (pM ? Mode.NOISE : Mode.SILENCE);
     }
     
     //length to play clip in seconds
@@ -29,11 +32,11 @@ public class AePlayTimer extends Thread {
     private AePlayWave wavPlayer;
     
     //main program
-    private AudioExpOneUI audioExperiment;
+    private AudioExperimentUI audioExperiment;
     
     private boolean success = false;
     
-    private boolean playNoise = true;
+    private Mode playMode;
 
     public AePlayWave getWavPlayer() {
         return wavPlayer;
@@ -53,68 +56,65 @@ public class AePlayTimer extends Thread {
     
     public void run() {
         System.out.println("Timer task started at:"+new Date());
-        if (playNoise) {
-            playNoise();
-        } else {
-            playSilence();
-        }
+        
+        try {
+            success = true;
+            this.displayModeInfoMessage();
+            this.startWavPlayer();
+            
+            int i=0;
+            while (success == true && i<playtimeLength) {
+                if (this.hasWavPlayerBeenStopped()) {
+                    success = false;
+                }
+                this.audioExperiment.assignCountdownClock(playtimeLength - i);
+                Thread.sleep(1000);
+                i++;
+            }
+            
+            this.stopWavPlayer();
+            
+            if (success) {
+                this.audioExperiment.trialRoundSucceded();
+            } else {
+                this.audioExperiment.trialRoundFailed();
+            }
+            
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }        
+
         System.out.println("Timer task finished at:"+new Date());
     }
-
-    private void playNoise() {
-        try {
-            success = true;
+    
+    private void displayModeInfoMessage() {
+        if (playMode == Mode.NOISE) {
             this.audioExperiment.displayInfoMessage("Playing Noise");
-            wavPlayer.startPlaying();
-            
-            int i=0;
-            while (success == true && i<playtimeLength) {
-                if (wavPlayer.isPlaying() == false) {
-                    success = false;
-                }
-                this.audioExperiment.assignCountdownClock(playtimeLength - i);
-                Thread.sleep(1000);
-                i++;
-            }
-            
-            wavPlayer.stopPlaying();
-            
-            if (success) {
-                this.audioExperiment.trialRoundSucceded();
-            } else {
-                this.audioExperiment.trialRoundFailed();
-            }
-            
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } else {
+            this.audioExperiment.displayInfoMessage("Playing Silence");
         }
     }
     
-    private void playSilence() {
-        try {
-            success = true;
-            this.audioExperiment.displayInfoMessage("Playing Silence");
+    private void startWavPlayer() {
+        if (playMode == Mode.NOISE) {
+            wavPlayer.startPlaying();
+        } else {
             wavPlayer.setShouldPlay(true);
-            
-            int i=0;
-            while (success == true && i<playtimeLength) {
-                if (wavPlayer.shouldPlay() == false) {
-                    success = false;
-                }
-                this.audioExperiment.assignCountdownClock(playtimeLength - i);
-                Thread.sleep(1000);
-                i++;
-            }
-            
-            if (success) {
-                this.audioExperiment.trialRoundSucceded();
-            } else {
-                this.audioExperiment.trialRoundFailed();
-            }
-            
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
-    }    
+    }
     
+    private boolean hasWavPlayerBeenStopped() {
+        if (playMode == Mode.NOISE) {
+            return (wavPlayer.isPlaying() == false);
+        } else {
+            return (wavPlayer.shouldPlay() == false);
+        }
+    }
+    
+    private void stopWavPlayer() {
+        if (playMode == Mode.NOISE) {
+            wavPlayer.stopPlaying();
+        }
+    }
+        
 }

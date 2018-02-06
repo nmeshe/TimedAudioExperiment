@@ -66,10 +66,12 @@ public class TrialData {
                     
         String headerRow = 
                 "indentifier," + 
+                "experimentNumber," +
                 "trialRound," + 
-                "durationDelay," + 
-                "playAmount," + 
-                "silenceAmount," + 
+                "noiseDollarAmount," + 
+                "silenceDollarAmount," + 
+                "noiseTimeAmount," +
+                "silenceTimeAmount," +
                 "selectedOption," + 
                 "bankAmount";
         
@@ -96,9 +98,13 @@ public class TrialData {
         }
     }
     
-    public void addTrialBlock(String t, int d, float p, float si, String se, float b) {
-        
-        TrialBlock tb = new TrialBlock(identifier, t, d, p, si, se, b);
+    public void addTrialBlock(int pExperimentNumber, String pTrialRound, 
+            float pNoiseDollars, float pSilenceDollar, 
+            int pNoiseTime, int pSilenceTime, String pSelectedOption, float pBankAmount) {
+      
+        TrialBlock tb = new TrialBlock(identifier, pExperimentNumber, pTrialRound, 
+                pNoiseDollars, pSilenceDollar, 
+                pNoiseTime, pSilenceTime, pSelectedOption, pBankAmount);
         this.addTrialBlock(tb);
     }
     

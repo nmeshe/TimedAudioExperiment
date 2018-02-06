@@ -13,10 +13,10 @@ import java.util.Scanner;
  */
 public class InputReaderThread extends Thread {
 
-    private AudioExpOneUI audioExperiment;
+    private AudioExperimentUI audioExperiment;
     private AePlayWave wavPlayer;
     
-    public InputReaderThread(AudioExpOneUI aeo, AePlayWave w) {
+    public InputReaderThread(AudioExperimentUI aeo, AePlayWave w) {
         audioExperiment = aeo;
         wavPlayer = w;
     }    
