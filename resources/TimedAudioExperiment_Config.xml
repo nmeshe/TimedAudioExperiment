@@ -10,10 +10,10 @@
   <MaxTimeMagnitude>8</MaxTimeMagnitude>
   <WavFile>resources/Kurzweil-K2000-Big-Jupiter-C3.wav</WavFile>
   <ResultsFolder>results</ResultsFolder>
-  <ShowStopButton>true</ShowStopButton>
-  <ShowCountdownClock>true</ShowCountdownClock>
-  <ShowRoundNumber>true</ShowRoundNumber>
-  <ShowMessages>true</ShowMessages>
+  <ShowStopButton>false</ShowStopButton>
+  <ShowCountdownClock>false</ShowCountdownClock>
+  <ShowRoundNumber>false</ShowRoundNumber>
+  <ShowMessages>false</ShowMessages>
   <ShowMoneyValues>true</ShowMoneyValues>
   <ShowTimeLengths>true</ShowTimeLengths>
   <NoiseValueLabel>Noise Value:</NoiseValueLabel>
