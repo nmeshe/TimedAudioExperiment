@@ -39,6 +39,10 @@ public class AudioExperimentUI extends javax.swing.JFrame {
             this.StopNoiseButton.setEnabled(false);
         }
         
+        if ((configFile.showMessages() == false) && (configFile.showStopButton()== false)) {
+            this.MessagePanel.setVisible(false);
+        }
+        
         if (configFile.showRoundNumber() == false) {
             this.RoundLabel.setVisible(false);
             this.RoundTextField.setVisible(false);
@@ -316,6 +320,18 @@ public class AudioExperimentUI extends javax.swing.JFrame {
             amtDiffFromPrevRound = configFile.getBaseTimeMagnitude();
         }
     }
+
+    private void assignInitialSilenceDollarAmount() {
+        if (this.configFile.getExperimentNumber() == ExperimentNumber.ONE) {
+           silenceDollarAmount = configFile.getBaseMoneyMagnitude();
+        } else {
+            silenceDollarAmount = 0;
+        }
+    }
+
+    private void assignInitialNoiseDollarAmount() {
+        noiseDollarAmount = configFile.getBaseMoneyMagnitude();
+    }
     
     public void updateStats(boolean initial) {
         
@@ -323,8 +339,8 @@ public class AudioExperimentUI extends javax.swing.JFrame {
             bankAmount = 0;
             roundNumber = 0;
             this.assignInitialDiffAmount();
-            noiseDollarAmount = configFile.getBaseMoneyMagnitude();
-            silenceDollarAmount = configFile.getBaseMoneyMagnitude();
+            this.assignInitialNoiseDollarAmount();
+            this.assignInitialSilenceDollarAmount();
             noiseTimeAmount = configFile.getBaseTimeMagnitude();
             silenceTimeAmount = configFile.getBaseTimeMagnitude();
             
@@ -388,53 +404,59 @@ public class AudioExperimentUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel6 = new javax.swing.JPanel();
         TopInfoPanel = new javax.swing.JPanel();
-        CountdownLabel = new javax.swing.JLabel();
-        CountdownTextField = new javax.swing.JTextField();
-        BankLabel = new javax.swing.JLabel();
-        BankTextField = new javax.swing.JTextField();
         RoundLabel = new javax.swing.JLabel();
         RoundTextField = new javax.swing.JTextField();
+        BankLabel = new javax.swing.JLabel();
+        BankTextField = new javax.swing.JTextField();
+        CountdownLabel = new javax.swing.JLabel();
+        CountdownTextField = new javax.swing.JTextField();
         PlayNoiseSilencePanel = new javax.swing.JPanel();
-        RightPlayPanel = new javax.swing.JPanel();
-        RightStartButton = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        RightLenLabel = new javax.swing.JLabel();
-        RightLenTextField = new javax.swing.JTextField();
-        jPanel4 = new javax.swing.JPanel();
-        RightValLabel = new javax.swing.JLabel();
-        RightValTextField = new javax.swing.JTextField();
         LeftPlayPanel = new javax.swing.JPanel();
-        LeftStartButton = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        LeftLenTextField = new javax.swing.JTextField();
-        LeftLenLabel = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        LeftValuePanel = new javax.swing.JPanel();
         LeftValLabel = new javax.swing.JLabel();
         LeftValTextField = new javax.swing.JTextField();
+        LeftLengthPanel = new javax.swing.JPanel();
+        LeftLenTextField = new javax.swing.JTextField();
+        LeftLenLabel = new javax.swing.JLabel();
+        LeftStartButton = new javax.swing.JButton();
+        RightPlayPanel = new javax.swing.JPanel();
+        RightValuePanel = new javax.swing.JPanel();
+        RightValLabel = new javax.swing.JLabel();
+        RightValTextField = new javax.swing.JTextField();
+        RightLengthPanel = new javax.swing.JPanel();
+        RightLenLabel = new javax.swing.JLabel();
+        RightLenTextField = new javax.swing.JTextField();
+        RightStartButton = new javax.swing.JButton();
         MessagePanel = new javax.swing.JPanel();
         MessagesLabel = new javax.swing.JLabel();
         StopNoiseButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        TopInfoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Name", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
+        TopInfoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        CountdownLabel.setText("Countdown:");
-
-        CountdownTextField.setEditable(false);
-        CountdownTextField.setEnabled(false);
-
-        BankLabel.setText("Bank Amout:");
-
-        BankTextField.setEditable(false);
-        BankTextField.setEnabled(false);
-
+        RoundLabel.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
         RoundLabel.setText("Round #");
 
         RoundTextField.setEditable(false);
+        RoundTextField.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
         RoundTextField.setEnabled(false);
+
+        BankLabel.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
+        BankLabel.setText("Bank Amount:");
+
+        BankTextField.setEditable(false);
+        BankTextField.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
+        BankTextField.setEnabled(false);
+
+        CountdownLabel.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
+        CountdownLabel.setText("Countdown:");
+
+        CountdownTextField.setEditable(false);
+        CountdownTextField.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
+        CountdownTextField.setEnabled(false);
 
         javax.swing.GroupLayout TopInfoPanelLayout = new javax.swing.GroupLayout(TopInfoPanel);
         TopInfoPanel.setLayout(TopInfoPanelLayout);
@@ -446,18 +468,21 @@ public class AudioExperimentUI extends javax.swing.JFrame {
                     .addGroup(TopInfoPanelLayout.createSequentialGroup()
                         .addComponent(RoundLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(RoundTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 321, Short.MAX_VALUE)
+                        .addComponent(RoundTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BankLabel))
                     .addGroup(TopInfoPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(CountdownLabel)))
-                .addGap(0, 12, Short.MAX_VALUE)
-                .addGroup(TopInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(BankTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
-                    .addComponent(CountdownTextField))
+                .addGap(67, 67, 67)
+                .addGroup(TopInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(CountdownTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BankTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
+
+        TopInfoPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {BankTextField, CountdownTextField});
+
         TopInfoPanelLayout.setVerticalGroup(
             TopInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TopInfoPanelLayout.createSequentialGroup()
@@ -473,89 +498,66 @@ public class AudioExperimentUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        RightStartButton.setText("Play Noise");
-        RightStartButton.setEnabled(false);
-        RightStartButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RightStartButtonActionPerformed(evt);
-            }
-        });
+        LeftValLabel.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
+        LeftValLabel.setText("Silence Value:");
 
-        RightLenLabel.setText("Noise Length:");
+        LeftValTextField.setEditable(false);
+        LeftValTextField.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
+        LeftValTextField.setEnabled(false);
 
-        RightLenTextField.setEditable(false);
-        RightLenTextField.setEnabled(false);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout LeftValuePanelLayout = new javax.swing.GroupLayout(LeftValuePanel);
+        LeftValuePanel.setLayout(LeftValuePanelLayout);
+        LeftValuePanelLayout.setHorizontalGroup(
+            LeftValuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(LeftValuePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(RightLenTextField)
-                    .addComponent(RightLenLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(LeftValuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, LeftValuePanelLayout.createSequentialGroup()
+                        .addComponent(LeftValLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(LeftValTextField, javax.swing.GroupLayout.Alignment.LEADING))
                 .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        LeftValuePanelLayout.setVerticalGroup(
+            LeftValuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(LeftValuePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(RightLenLabel)
+                .addComponent(LeftValLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(RightLenTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(LeftValTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        RightValLabel.setText("Noise Value:");
+        LeftLenTextField.setEditable(false);
+        LeftLenTextField.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
+        LeftLenTextField.setEnabled(false);
 
-        RightValTextField.setEditable(false);
-        RightValTextField.setEnabled(false);
+        LeftLenLabel.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
+        LeftLenLabel.setText("Silence Length:");
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout LeftLengthPanelLayout = new javax.swing.GroupLayout(LeftLengthPanel);
+        LeftLengthPanel.setLayout(LeftLengthPanelLayout);
+        LeftLengthPanelLayout.setHorizontalGroup(
+            LeftLengthPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(LeftLengthPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(RightValTextField)
-                    .addComponent(RightValLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(LeftLengthPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(LeftLenTextField)
+                    .addGroup(LeftLengthPanelLayout.createSequentialGroup()
+                        .addComponent(LeftLenLabel)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(RightValLabel)
+        LeftLengthPanelLayout.setVerticalGroup(
+            LeftLengthPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(LeftLengthPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(LeftLenLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(RightValTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(LeftLenTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        javax.swing.GroupLayout RightPlayPanelLayout = new javax.swing.GroupLayout(RightPlayPanel);
-        RightPlayPanel.setLayout(RightPlayPanelLayout);
-        RightPlayPanelLayout.setHorizontalGroup(
-            RightPlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(RightPlayPanelLayout.createSequentialGroup()
-                .addGap(79, 79, 79)
-                .addGroup(RightPlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(RightStartButton, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(91, Short.MAX_VALUE))
-        );
-        RightPlayPanelLayout.setVerticalGroup(
-            RightPlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(RightPlayPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(46, 46, 46)
-                .addComponent(RightStartButton))
-        );
-
+        LeftStartButton.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
         LeftStartButton.setText("Play Silence");
         LeftStartButton.setEnabled(false);
         LeftStartButton.addActionListener(new java.awt.event.ActionListener() {
@@ -564,106 +566,144 @@ public class AudioExperimentUI extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 55, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        LeftLenTextField.setEditable(false);
-        LeftLenTextField.setEnabled(false);
-
-        LeftLenLabel.setText("Silence Length:");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(LeftLenTextField)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(LeftLenLabel)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(LeftLenLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(LeftLenTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        LeftValLabel.setText("Silence Value:");
-
-        LeftValTextField.setEditable(false);
-        LeftValTextField.setEnabled(false);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(LeftValLabel)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(LeftValTextField, javax.swing.GroupLayout.Alignment.LEADING))
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(LeftValLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(LeftValTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
         javax.swing.GroupLayout LeftPlayPanelLayout = new javax.swing.GroupLayout(LeftPlayPanel);
         LeftPlayPanel.setLayout(LeftPlayPanelLayout);
         LeftPlayPanelLayout.setHorizontalGroup(
             LeftPlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LeftPlayPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(67, 67, 67)
                 .addGroup(LeftPlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(LeftStartButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(LeftStartButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(LeftLengthPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(LeftValuePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(86, 86, 86))
         );
         LeftPlayPanelLayout.setVerticalGroup(
             LeftPlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LeftPlayPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(LeftPlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(LeftPlayPanelLayout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(LeftStartButton))
-                    .addGroup(LeftPlayPanelLayout.createSequentialGroup()
-                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                .addComponent(LeftValuePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(LeftLengthPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(LeftStartButton))
         );
 
-        MessagePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Messages"));
+        RightValLabel.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
+        RightValLabel.setText("Noise Value:");
 
+        RightValTextField.setEditable(false);
+        RightValTextField.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
+        RightValTextField.setEnabled(false);
+
+        javax.swing.GroupLayout RightValuePanelLayout = new javax.swing.GroupLayout(RightValuePanel);
+        RightValuePanel.setLayout(RightValuePanelLayout);
+        RightValuePanelLayout.setHorizontalGroup(
+            RightValuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(RightValuePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(RightValuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(RightValTextField)
+                    .addComponent(RightValLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        RightValuePanelLayout.setVerticalGroup(
+            RightValuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(RightValuePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(RightValLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RightValTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        RightLenLabel.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
+        RightLenLabel.setText("Noise Length:");
+
+        RightLenTextField.setEditable(false);
+        RightLenTextField.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
+        RightLenTextField.setEnabled(false);
+
+        javax.swing.GroupLayout RightLengthPanelLayout = new javax.swing.GroupLayout(RightLengthPanel);
+        RightLengthPanel.setLayout(RightLengthPanelLayout);
+        RightLengthPanelLayout.setHorizontalGroup(
+            RightLengthPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(RightLengthPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(RightLengthPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(RightLenTextField)
+                    .addComponent(RightLenLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        RightLengthPanelLayout.setVerticalGroup(
+            RightLengthPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(RightLengthPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(RightLenLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RightLenTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        RightStartButton.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
+        RightStartButton.setText("Play Noise");
+        RightStartButton.setEnabled(false);
+        RightStartButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RightStartButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout RightPlayPanelLayout = new javax.swing.GroupLayout(RightPlayPanel);
+        RightPlayPanel.setLayout(RightPlayPanelLayout);
+        RightPlayPanelLayout.setHorizontalGroup(
+            RightPlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(RightPlayPanelLayout.createSequentialGroup()
+                .addGap(79, 79, 79)
+                .addGroup(RightPlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(RightStartButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RightValuePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RightLengthPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
+        );
+        RightPlayPanelLayout.setVerticalGroup(
+            RightPlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(RightPlayPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(RightValuePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RightLengthPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(46, 46, 46)
+                .addComponent(RightStartButton))
+        );
+
+        javax.swing.GroupLayout PlayNoiseSilencePanelLayout = new javax.swing.GroupLayout(PlayNoiseSilencePanel);
+        PlayNoiseSilencePanel.setLayout(PlayNoiseSilencePanelLayout);
+        PlayNoiseSilencePanelLayout.setHorizontalGroup(
+            PlayNoiseSilencePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PlayNoiseSilencePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(LeftPlayPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(RightPlayPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        PlayNoiseSilencePanelLayout.setVerticalGroup(
+            PlayNoiseSilencePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PlayNoiseSilencePanelLayout.createSequentialGroup()
+                .addGroup(PlayNoiseSilencePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(LeftPlayPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RightPlayPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(94, Short.MAX_VALUE))
+        );
+
+        MessagePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Messages", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 36))); // NOI18N
+        MessagePanel.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
+
+        MessagesLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         MessagesLabel.setForeground(new java.awt.Color(255, 0, 51));
 
+        StopNoiseButton.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
         StopNoiseButton.setText("Stop Noise");
         StopNoiseButton.setEnabled(false);
         StopNoiseButton.addActionListener(new java.awt.event.ActionListener() {
@@ -678,66 +718,47 @@ public class AudioExperimentUI extends javax.swing.JFrame {
             MessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MessagePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(MessagesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(StopNoiseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(MessagesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 727, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addComponent(StopNoiseButton)
                 .addContainerGap())
         );
         MessagePanelLayout.setVerticalGroup(
             MessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MessagePanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(MessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(MessagesLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MessagePanelLayout.createSequentialGroup()
-                        .addComponent(StopNoiseButton)
-                        .addContainerGap())))
+                .addContainerGap(70, Short.MAX_VALUE)
+                .addComponent(StopNoiseButton)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MessagePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(MessagesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout PlayNoiseSilencePanelLayout = new javax.swing.GroupLayout(PlayNoiseSilencePanel);
-        PlayNoiseSilencePanel.setLayout(PlayNoiseSilencePanelLayout);
-        PlayNoiseSilencePanelLayout.setHorizontalGroup(
-            PlayNoiseSilencePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PlayNoiseSilencePanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(LeftPlayPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(RightPlayPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(MessagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(TopInfoPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(PlayNoiseSilencePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PlayNoiseSilencePanelLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(MessagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        PlayNoiseSilencePanelLayout.setVerticalGroup(
-            PlayNoiseSilencePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PlayNoiseSilencePanelLayout.createSequentialGroup()
-                .addGroup(PlayNoiseSilencePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(LeftPlayPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(RightPlayPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(TopInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(PlayNoiseSilencePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(MessagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(PlayNoiseSilencePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(TopInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(TopInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PlayNoiseSilencePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        getContentPane().add(jPanel6, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -864,27 +885,27 @@ public class AudioExperimentUI extends javax.swing.JFrame {
     private javax.swing.JTextField CountdownTextField;
     private javax.swing.JLabel LeftLenLabel;
     private javax.swing.JTextField LeftLenTextField;
+    private javax.swing.JPanel LeftLengthPanel;
     private javax.swing.JPanel LeftPlayPanel;
     private javax.swing.JButton LeftStartButton;
     private javax.swing.JLabel LeftValLabel;
     private javax.swing.JTextField LeftValTextField;
+    private javax.swing.JPanel LeftValuePanel;
     private javax.swing.JPanel MessagePanel;
     private javax.swing.JLabel MessagesLabel;
     private javax.swing.JPanel PlayNoiseSilencePanel;
     private javax.swing.JLabel RightLenLabel;
     private javax.swing.JTextField RightLenTextField;
+    private javax.swing.JPanel RightLengthPanel;
     private javax.swing.JPanel RightPlayPanel;
     private javax.swing.JButton RightStartButton;
     private javax.swing.JLabel RightValLabel;
     private javax.swing.JTextField RightValTextField;
+    private javax.swing.JPanel RightValuePanel;
     private javax.swing.JLabel RoundLabel;
     private javax.swing.JTextField RoundTextField;
     private javax.swing.JButton StopNoiseButton;
     private javax.swing.JPanel TopInfoPanel;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     // End of variables declaration//GEN-END:variables
 }
