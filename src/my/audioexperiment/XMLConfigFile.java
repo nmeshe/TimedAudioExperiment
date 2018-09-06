@@ -15,8 +15,10 @@ import java.io.File;
 public class XMLConfigFile {
     
     private ExperimentNumber ExperimentNumber;
-    private float BaseMoneyMagnitude;
-    private int BaseTimeMagnitude;
+    private float NoiseMoneyMagnitude;
+    private float SilenceMoneyMagnitude;
+    private int NoiseTimeMagnitude;
+    private int SilenceTimeMagnitude;
     private String WavFile;
     private String configFilePath;
     private float MaxMoneyMagnitude;
@@ -47,12 +49,14 @@ public class XMLConfigFile {
     public void setResultsFolder(String ResultsFolder) {
         this.ResultsFolder = ResultsFolder;
     }
-
+    
     private static String EXPERIMENT_NUMBER = "ExperimentNumber"; //experiment one, two, or three
-    private static String BASE_MONEY_MAGNITUDE = "BaseMoneyMagnitude"; //starting amount of money for each trial
+    private static String NOISE_MONEY_MAGNITUDE = "NoiseMoneyMagnitude"; //starting amount of money for listening to noise
+    private static String SILENCE_MONEY_MAGNITUDE = "SilenceMoneyMagnitude"; //starting amount of money for listening to silence
     private static String MIN_MONEY_MAGNITUDE = "MinMoneyMagnitude"; //minimum amount of money
     private static String MAX_MONEY_MAGNITUDE = "MaxMoneyMagnitude"; //maximum amount of money
-    private static String BASE_TIME_MAGNITUDE = "BaseTimeMagnitude"; //starting time length of each trail
+    private static String NOISE_TIME_MAGNITUDE = "NoiseTimeMagnitude"; //starting time length of each trail
+    private static String SILENCE_TIME_MAGNITUDE = "SilenceTimeMagnitude"; //starting time length of each trail
     private static String MIN_TIME_MAGNITUDE = "MinTimeMagnitude"; //minimum amount of money
     private static String MAX_TIME_MAGNITUDE = "MaxTimeMagnitude"; //maximum amount of money
     private static String WAV_FILE = "WavFile"; //location of WAV audio file used for trials
@@ -221,18 +225,32 @@ public class XMLConfigFile {
         this.configFilePath = configFilePath;
     }
     
-    public float getBaseMoneyMagnitude() {
-        return BaseMoneyMagnitude;
+    public float getNoiseMoneyMagnitude() {
+        return NoiseMoneyMagnitude;
     }
-    public void setBaseMoneyMagnitude(float b) {
-        this.BaseMoneyMagnitude = b;
-    }  
+    public void setNoiseMoneyMagnitude(float b) {
+        this.NoiseMoneyMagnitude = b;
+    }     
+    
+    public float getSilenceMoneyMagnitude() {
+        return SilenceMoneyMagnitude;
+    }
+    public void setSilenceMoneyMagnitude(float b) {
+        this.SilenceMoneyMagnitude = b;
+    } 
 
-    public int getBaseTimeMagnitude() {
-        return BaseTimeMagnitude;
+    public int getNoiseTimeMagnitude() {
+        return NoiseTimeMagnitude;
     }
-    public void setBaseTimeMagnitude(int time) {
-        this.BaseTimeMagnitude = time;
+    public void setNoiseTimeMagnitude(int time) {
+        this.NoiseTimeMagnitude = time;
+    }
+
+    public int getSilenceTimeMagnitude() {
+        return SilenceTimeMagnitude;
+    }
+    public void setSilenceTimeMagnitude(int time) {
+        this.SilenceTimeMagnitude = time;
     }
 
     public String getWavFile() {
@@ -293,9 +311,13 @@ public class XMLConfigFile {
             }
             System.out.println("ExperimentNumber: " + lExperimentNumber);
             
-            String lBaseMoneyMagnitude = doc.getDocumentElement().getElementsByTagName(BASE_MONEY_MAGNITUDE).item(0).getTextContent();
-            this.BaseMoneyMagnitude = Float.parseFloat(lBaseMoneyMagnitude);
-            System.out.println("BaseMoneyMagnitude: " + this.BaseMoneyMagnitude);
+            String lNoiseMoneyMagnitude = doc.getDocumentElement().getElementsByTagName(NOISE_MONEY_MAGNITUDE).item(0).getTextContent();
+            this.NoiseMoneyMagnitude = Float.parseFloat(lNoiseMoneyMagnitude);
+            System.out.println("NoiseMoneyMagnitude: " + this.NoiseMoneyMagnitude);
+
+            String lSilenceMoneyMagnitude = doc.getDocumentElement().getElementsByTagName(SILENCE_MONEY_MAGNITUDE).item(0).getTextContent();
+            this.SilenceMoneyMagnitude = Float.parseFloat(lSilenceMoneyMagnitude);
+            System.out.println("SilenceMoneyMagnitude: " + this.SilenceMoneyMagnitude);
 
             String lMinMoneyMagnitude = doc.getDocumentElement().getElementsByTagName(MIN_MONEY_MAGNITUDE).item(0).getTextContent();
             this.MinMoneyMagnitude = Float.parseFloat(lMinMoneyMagnitude);
@@ -312,12 +334,16 @@ public class XMLConfigFile {
             String lMaxRounds = doc.getDocumentElement().getElementsByTagName(MAX_ROUNDS).item(0).getTextContent();
             this.MaxRounds = Integer.parseInt(lMaxRounds);
             System.out.println("MaxRounds: " + this.MaxRounds);
+            System.out.println();     
             
-            String lBaseTime = doc.getDocumentElement().getElementsByTagName(BASE_TIME_MAGNITUDE).item(0).getTextContent();
-            this.BaseTimeMagnitude = Integer.parseInt(lBaseTime);
-            System.out.println("BaseTimeMagnitude: " + this.BaseTimeMagnitude);            
-            System.out.println();
+            String lNoiseTimeMagnitude = doc.getDocumentElement().getElementsByTagName(NOISE_TIME_MAGNITUDE).item(0).getTextContent();
+            this.NoiseTimeMagnitude = Integer.parseInt(lNoiseTimeMagnitude);
+            System.out.println("NoiseTimeMagnitude: " + this.NoiseTimeMagnitude);            
             
+            String lSilenceTimeMagnitude = doc.getDocumentElement().getElementsByTagName(SILENCE_TIME_MAGNITUDE).item(0).getTextContent();
+            this.SilenceTimeMagnitude = Integer.parseInt(lSilenceTimeMagnitude);
+            System.out.println("SilenceTimeMagnitude: " + this.SilenceTimeMagnitude);            
+
             String lMinTimeMagnitude = doc.getDocumentElement().getElementsByTagName(MIN_TIME_MAGNITUDE).item(0).getTextContent();
             this.MinTimeMagnitude = Integer.parseInt(lMinTimeMagnitude);
             System.out.println("MinTimeMagnitude: " + this.MinTimeMagnitude);
@@ -325,7 +351,7 @@ public class XMLConfigFile {
             String lMaxTimeMagnitude = doc.getDocumentElement().getElementsByTagName(MAX_TIME_MAGNITUDE).item(0).getTextContent();
             this.MaxTimeMagnitude = Integer.parseInt(lMaxTimeMagnitude);
             System.out.println("MaxTimeMagnitude: " + this.MaxTimeMagnitude);
-
+            System.out.println();
             
             //STORE AND PRINT OUT DISPLAY OPTIONS
             String lShowCountdownClock = doc.getDocumentElement().getElementsByTagName(SHOW_COUNTDOWN_CLOCK).item(0).getTextContent();

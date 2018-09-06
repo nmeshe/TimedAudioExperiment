@@ -1,11 +1,13 @@
 <TimedAudioExperimentOne_Config>
-  <ExperimentNumber>2</ExperimentNumber>
-  <BaseMoneyMagnitude>.50</BaseMoneyMagnitude>
+  <ExperimentNumber>1</ExperimentNumber>
+  <NoiseMoneyMagnitude>.50</NoiseMoneyMagnitude>
+  <SilenceMoneyMagnitude>.00</SilenceMoneyMagnitude>
   <MaxMoneyMagnitude>1.00</MaxMoneyMagnitude>
   <MinMoneyMagnitude>0.00</MinMoneyMagnitude>
   <MaxStops>3</MaxStops>
   <MaxRounds>6</MaxRounds>
-  <BaseTimeMagnitude>4</BaseTimeMagnitude>
+  <NoiseTimeMagnitude>4</NoiseTimeMagnitude>
+  <SilenceTimeMagnitude>4</SilenceTimeMagnitude>  
   <MinTimeMagnitude>1</MinTimeMagnitude>
   <MaxTimeMagnitude>8</MaxTimeMagnitude>
   <WavFile>resources/Kurzweil-K2000-Big-Jupiter-C3.wav</WavFile>

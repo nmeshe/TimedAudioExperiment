@@ -275,7 +275,6 @@ public class AudioExperimentUI extends javax.swing.JFrame {
     }
     
     private void adjustNoiseDuration() {
-
         if (this.configFile.getExperimentNumber() == ExperimentNumber.TWO) {
             amtDiffFromPrevRound = Math.round(amtDiffFromPrevRound/2);
 
@@ -315,22 +314,25 @@ public class AudioExperimentUI extends javax.swing.JFrame {
     
     private void assignInitialDiffAmount() {
         if (this.configFile.getExperimentNumber() == ExperimentNumber.ONE) {
-            amtDiffFromPrevRound = configFile.getBaseMoneyMagnitude();
-        } else {
-            amtDiffFromPrevRound = configFile.getBaseTimeMagnitude();
+            amtDiffFromPrevRound = configFile.getNoiseMoneyMagnitude();
+        } 
+        else if (this.configFile.getExperimentNumber() == ExperimentNumber.TWO) {
+            amtDiffFromPrevRound = configFile.getNoiseTimeMagnitude();
+        }
+        else if (this.configFile.getExperimentNumber() == ExperimentNumber.THREE) {
+            amtDiffFromPrevRound = configFile.getSilenceTimeMagnitude();
+        }
+        else {
+            amtDiffFromPrevRound = configFile.getNoiseTimeMagnitude();
         }
     }
 
     private void assignInitialSilenceDollarAmount() {
-        if (this.configFile.getExperimentNumber() == ExperimentNumber.ONE) {
-           silenceDollarAmount = configFile.getBaseMoneyMagnitude();
-        } else {
-            silenceDollarAmount = 0;
-        }
+       silenceDollarAmount = configFile.getSilenceMoneyMagnitude();
     }
 
     private void assignInitialNoiseDollarAmount() {
-        noiseDollarAmount = configFile.getBaseMoneyMagnitude();
+        noiseDollarAmount = configFile.getNoiseMoneyMagnitude();
     }
     
     public void updateStats(boolean initial) {
@@ -341,8 +343,8 @@ public class AudioExperimentUI extends javax.swing.JFrame {
             this.assignInitialDiffAmount();
             this.assignInitialNoiseDollarAmount();
             this.assignInitialSilenceDollarAmount();
-            noiseTimeAmount = configFile.getBaseTimeMagnitude();
-            silenceTimeAmount = configFile.getBaseTimeMagnitude();
+            noiseTimeAmount = configFile.getNoiseTimeMagnitude();
+            silenceTimeAmount = configFile.getSilenceTimeMagnitude();
             
         } else {
             bankAmount = currentTrialBlock.bankAmount;
